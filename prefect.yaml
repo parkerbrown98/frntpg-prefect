@@ -54,3 +54,20 @@ deployments:
     anchor_date: '2024-11-05T04:01:50.072327+00:00'
     timezone: UTC
     active: true
+- name: fetch_rss_feeds
+  version:
+  tags: []
+  concurrency_limit:
+  description:
+  entrypoint: fetch_rss_feeds.py:fetch_rss_feeds
+  parameters: {}
+  work_pool:
+    name: vm-pool
+    work_queue_name:
+    job_variables: {}
+  enforce_parameter_schema: true
+  schedules:
+  - interval: 3600.0
+    anchor_date: '2024-11-05T05:22:24.685886+00:00'
+    timezone: UTC
+    active: true

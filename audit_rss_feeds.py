@@ -24,7 +24,7 @@ def save_audit_result(id: int, valid: bool):
     with db_context as session:
         session.execute("UPDATE rss_feeds SET audited_at = :audited_at, active = :active WHERE id = :id", {"id": id, "audited_at": datetime.now(), "active": valid})
         
-@flow
+@flow(persist_result=False)
 def audit_rss_feeds(limit: int = 10):
     db_context = SqlAlchemyConnector.load("pg-local")
     with db_context as session:

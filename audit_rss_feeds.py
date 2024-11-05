@@ -18,7 +18,7 @@ def validate_feed(id: int) -> bool:
         except Exception as e:
             return False
  
-@task(result_storage=False)
+@task(persist_result=False)
 def save_audit_result(id: int, valid: bool):
     db_context = SqlAlchemyConnector.load("pg-local")
     with db_context as session:

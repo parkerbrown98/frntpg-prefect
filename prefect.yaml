@@ -7,10 +7,10 @@ name: frntpg-prefect
 prefect-version: 3.1.1.dev3
 
 # build section allows you to manage and build docker images
-build: null
+build:
 
 # push section allows you to manage if and how this project is uploaded to remote locations
-push: null
+push:
 
 # pull section allows you to provide instructions for cloning this project in remote locations
 pull:
@@ -19,21 +19,38 @@ pull:
     repository: https://github.com/parkerbrown98/frntpg-prefect.git
     branch: main
 - prefect.deployments.steps.pip_install_requirements:
-    directory: "{{ clone-step.directory }}"
+    directory: '{{ clone-step.directory }}'
     requirements_file: requirements.txt
 
 # the deployments section allows you to provide configuration for deploying flows
 deployments:
 - name: fetch_rss_articles
-  version: null
+  version:
   tags: []
-  concurrency_limit: null
-  description: null
+  concurrency_limit:
+  description:
   entrypoint: fetch_rss_articles.py:fetch_rss_articles
   parameters: {}
   work_pool:
     name: vm-pool
-    work_queue_name: null
+    work_queue_name:
     job_variables: {}
   enforce_parameter_schema: true
   schedules: []
+- name: audit_rss_feeds
+  version:
+  tags: []
+  concurrency_limit:
+  description:
+  entrypoint: audit_rss_feeds.py:audit_rss_feeds
+  parameters: {}
+  work_pool:
+    name: vm-pool
+    work_queue_name:
+    job_variables: {}
+  enforce_parameter_schema: true
+  schedules:
+  - interval: 1800.0
+    anchor_date: '2024-11-05T04:01:50.072327+00:00'
+    timezone: UTC
+    active: true

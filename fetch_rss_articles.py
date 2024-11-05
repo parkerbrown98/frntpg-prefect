@@ -22,7 +22,7 @@ def get_feed_articles(url: str) -> list:
 def save_articles(feed_id: int, articles: list):
     db_context = SqlAlchemyConnector.load("pg-local")
     with db_context as session:
-        session.execute_many("INSERT INTO rss_articles (feed_id, title, url, author, published_at) VALUES (:feed_id, :title, :url, :author, :published_at)", [{"feed_id": feed_id, **article} for article in articles])
+        session.execute_many("INSERT INTO rss_articles (feed_id, title, url, author, published_at) VALUES (:feed_id, :title, :url, :author, :published_at) ON CONFLICT DO NOTHING", [{"feed_id": feed_id, **article} for article in articles])
 
 @flow(persist_result=False)
 def fetch_rss_articles(id: int):

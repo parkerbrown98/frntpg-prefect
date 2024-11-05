@@ -1,0 +1,39 @@
+# Welcome to your prefect.yaml file! You can use this file for storing and managing
+# configuration for deploying your flows. We recommend committing this file to source
+# control along with your flow code.
+
+# Generic metadata about this project
+name: frntpg-prefect
+prefect-version: 3.1.1.dev3
+
+# build section allows you to manage and build docker images
+build: null
+
+# push section allows you to manage if and how this project is uploaded to remote locations
+push: null
+
+# pull section allows you to provide instructions for cloning this project in remote locations
+pull:
+- prefect.deployments.steps.git_clone:
+    id: clone-step
+    repository: https://github.com/parkerbrown98/frntpg-prefect.git
+    branch: main
+- prefect.deployments.steps.pip_install_requirements:
+    directory: "{{ clone-step.directory }}"
+    requirements_file: requirements.txt
+
+# the deployments section allows you to provide configuration for deploying flows
+deployments:
+- name: fetch_rss_articles
+  version: null
+  tags: []
+  concurrency_limit: null
+  description: null
+  entrypoint: fetch_rss_articles.py:fetch_rss_articles
+  parameters: {}
+  work_pool:
+    name: vm-pool
+    work_queue_name: null
+    job_variables: {}
+  enforce_parameter_schema: true
+  schedules: []

@@ -24,8 +24,9 @@ def save_articles(feed_id: int, articles: list):
     with db_context as session:
         session.execute_many("INSERT INTO rss_articles (feed_id, title, url, author, published_at) VALUES (:feed_id, :title, :url, :author, :published_at) ON CONFLICT DO NOTHING", [{"feed_id": feed_id, **article} for article in articles])
 
-@flow(persist_result=False)
+@flow(persist_result=False, log_prints=True)
 def fetch_rss_articles(id: int):
     url = get_feed_url(id)
     articles = get_feed_articles(url)
     save_articles(id, articles)
+    print(f"Saved {len(articles)} articles for feed {id}")

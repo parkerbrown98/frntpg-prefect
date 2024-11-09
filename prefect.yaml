@@ -71,3 +71,20 @@ deployments:
     anchor_date: '2024-11-05T05:22:24.685886+00:00'
     timezone: UTC
     active: true
+- name: extract-articles
+  version:
+  tags: []
+  concurrency_limit:
+  description:
+  entrypoint: extract_articles.py:extract_articles
+  parameters: {}
+  work_pool:
+    name: vm-pool
+    work_queue_name:
+    job_variables: {}
+  enforce_parameter_schema: true
+  schedules:
+  - interval: 1800.0
+    anchor_date: '2024-11-09T23:38:47.572807+00:00'
+    timezone: UTC
+    active: true

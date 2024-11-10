@@ -59,7 +59,7 @@ def save_article_extraction(id: int, article: ArticleExtraction):
 def get_articles_for_extraction(limit: int = 10):
     conn = SqlAlchemyConnector.load("pg-local")
     with conn as session:
-        return session.fetch_all("SELECT id, url FROM rss_articles WHERE NOT EXISTS (SELECT 1 FROM article_extractions WHERE article_extractions.feed_id = rss_articles.id) ORDER BY published_at DESC LIMIT :limit", {"limit": limit})
+        return session.fetch_all("SELECT id, url FROM rss_articles WHERE NOT EXISTS (SELECT 1 FROM article_extractions WHERE article_extractions.article_id = rss_articles.id) ORDER BY published_at DESC LIMIT :limit", {"limit": limit})
 
 @flow(persist_result=False, log_prints=True)
 def extract_articles(limit: int = 10):
